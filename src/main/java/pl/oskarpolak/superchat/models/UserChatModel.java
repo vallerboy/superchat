@@ -5,7 +5,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.web.socket.WebSocketSession;
 
 @Data
-@NoArgsConstructor
 public class UserChatModel {
     private WebSocketSession session;
     private String nickname;
