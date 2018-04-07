@@ -1,5 +1,6 @@
 package pl.oskarpolak.superchat.models;
 
+import org.apache.catalina.User;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
@@ -30,6 +31,10 @@ public class ChatSocket extends TextWebSocketHandler implements WebSocketConfigu
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         userList.add(new UserChatModel(session));
+
+        UserChatModel userChatModel = findUserBySessionId(session);
+        userChatModel.sendMessage("Witaj na naszym chacie!");
+        userChatModel.sendMessage("Twoja pierwsza wiadomość będzie Twoim nickiem");
     }
 
     @Override
@@ -39,12 +44,20 @@ public class ChatSocket extends TextWebSocketHandler implements WebSocketConfigu
 
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
+        UserChatModel userChatModel = findUserBySessionId(session);
+
+        if(userChatModel.getNickname() == null){
+            userChatModel.setNickname(message.getPayload());
+            userChatModel.sendMessage("Ustawiono Twój nick!");
+            return;
+        }
+
         sendMessageToAll(message);
     }
 
     private void sendMessageToAll(TextMessage message) throws IOException {
         for (UserChatModel userModel : userList) {
-             userModel.sendMessage(message);
+             userModel.sendMessage(message.getPayload());
         }
     }
 
