@@ -20,6 +20,7 @@ import java.util.List;
 public class ChatSocket extends TextWebSocketHandler implements WebSocketConfigurer {
 
     List<UserChatModel> userList = new ArrayList<>();
+    List<String> messageHistory = new ArrayList<>();
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry webSocketHandlerRegistry) {
@@ -49,11 +50,18 @@ public class ChatSocket extends TextWebSocketHandler implements WebSocketConfigu
         if(sender.getNickname() == null){
             sender.setNickname(message.getPayload());
             sender.sendMessage("Ustawiono Twój nick!");
+
+            printHistory(sender);
             return;
         }
 
-        sendMessageToAll(sender.getNickname() + ": " + message.getPayload());
+        String finalMessage = sender.getNickname() + ": " + message.getPayload();
+        
+        addHistoryMessage(finalMessage);
+        sendMessageToAll(finalMessage);
     }
+
+
 
     private void sendMessageToAll(String message) throws IOException {
         for (UserChatModel userModel : userList) {
@@ -67,5 +75,24 @@ public class ChatSocket extends TextWebSocketHandler implements WebSocketConfigu
                 .findAny().get();
     }
 
+    private void addHistoryMessage(String s){
+        if(messageHistory.size() < 30){
+            messageHistory.add(s);
+            return;
+        }
+
+        messageHistory.remove(0);
+        messageHistory.add(s);
+    }
+
+    private void printHistory(UserChatModel sender) {
+        for (String s : messageHistory) {
+            try {
+                sender.sendMessage(s);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
 }
