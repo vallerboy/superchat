@@ -56,7 +56,7 @@ public class ChatSocket extends TextWebSocketHandler implements WebSocketConfigu
         }
 
         String finalMessage = sender.getNickname() + ": " + message.getPayload();
-        
+
         addHistoryMessage(finalMessage);
         sendMessageToAll(finalMessage);
     }
