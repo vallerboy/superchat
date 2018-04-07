@@ -4,17 +4,14 @@
     <meta charset="UTF-8">
     <title>AkademiaChat</title>
     <link rel="stylesheet" type="text/css" th:href="@{/style.css}">
+    <script type="text/javascript" th:src="@{/chatScript.js}"></script>
 </head>
 <body>
     <section id="wrapper">
         <!--<h1>AkademiaChat</h1>-->
 
         <article>
-            <ul id="messages">
-                <li class="message">Test</li>
-                <li class="message">Test 2</li>
-                <li class="message">Test 3</li>
-            </ul>
+            <ul id="messages"></ul>
 
             <hr/>
 
@@ -23,5 +20,14 @@
             </form>
         </article>
     </section>
+
+    <script>
+        messages = document.getElementById("messages"); //To jest element do wypisywania wiadomości
+        writer = document.getElementById("writer"); //To jest element do przyjmownia wiadomości z klawiatury (form)
+        form = writer.form;
+
+        window.addEventListener("load", onLoad, false);
+    </script>
+
 </body>
 </html>
