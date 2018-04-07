@@ -10,6 +10,12 @@ body {
     font-size: 30px;
 }
 
+#writer {
+    width: 100%;
+    height: 50px;
+    font-size: 30px;
+}
+
 #wrapper {
     width: 100%;
     margin: 0 auto;
@@ -30,6 +36,6 @@ body {
     padding: 1px 0;
 }
 
-section, header {
+section, h1 {
     display: block;
 }
