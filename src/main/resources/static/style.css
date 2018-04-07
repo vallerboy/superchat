@@ -1,0 +1,35 @@
+body {
+    margin: 0;
+    padding: 0;
+    background: grey;
+}
+
+.message:before {
+    content: ' ';
+    color: #a5a5a5;
+    font-size: 30px;
+}
+
+#wrapper {
+    width: 100%;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 10px;
+    border-top: 1px solid #fff;
+}
+
+#messages {
+    overflow: auto;
+    max-height: 100px;
+    list-style: none;
+    padding: 0;
+}
+
+#messages li  {
+    margin: 0;
+    padding: 1px 0;
+}
+
+section, header {
+    display: block;
+}
