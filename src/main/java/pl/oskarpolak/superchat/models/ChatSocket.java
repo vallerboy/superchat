@@ -17,7 +17,7 @@ import java.util.List;
 @Component
 public class ChatSocket extends TextWebSocketHandler implements WebSocketConfigurer {
 
-    List<WebSocketSession> userList = new ArrayList<>();
+    List<UserChatModel> userList = new ArrayList<>();
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry webSocketHandlerRegistry) {
@@ -28,7 +28,7 @@ public class ChatSocket extends TextWebSocketHandler implements WebSocketConfigu
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        userList.add(session);
+        userList.add(new UserChatModel(session));
     }
 
     @Override
@@ -41,5 +41,9 @@ public class ChatSocket extends TextWebSocketHandler implements WebSocketConfigu
         for (WebSocketSession webSocketSession : userList) {
              webSocketSession.sendMessage(message);
         }
+    }
+
+    private UserChatModel findUserBySessionId(WebSocketSession session){
+
     }
 }
