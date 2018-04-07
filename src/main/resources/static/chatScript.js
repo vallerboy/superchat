@@ -1,5 +1,5 @@
     function onLoad() {
-        var ws = "ws://localhost:8080/chat"
+        var ws = "ws://localhost:8080/chat";
         websocket = new WebSocket(ws);
         websocket.onopen = function (ev) {
             onOpen(ev)
