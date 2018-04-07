@@ -44,20 +44,20 @@ public class ChatSocket extends TextWebSocketHandler implements WebSocketConfigu
 
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-        UserChatModel userChatModel = findUserBySessionId(session);
+        UserChatModel sender = findUserBySessionId(session);
 
-        if(userChatModel.getNickname() == null){
-            userChatModel.setNickname(message.getPayload());
-            userChatModel.sendMessage("Ustawiono Twój nick!");
+        if(sender.getNickname() == null){
+            sender.setNickname(message.getPayload());
+            sender.sendMessage("Ustawiono Twój nick!");
             return;
         }
 
-        sendMessageToAll(message);
+        sendMessageToAll(sender.getNickname() + ": " + message.getPayload());
     }
 
-    private void sendMessageToAll(TextMessage message) throws IOException {
+    private void sendMessageToAll(String message) throws IOException {
         for (UserChatModel userModel : userList) {
-             userModel.sendMessage(message.getPayload());
+             userModel.sendMessage(message);
         }
     }
 
