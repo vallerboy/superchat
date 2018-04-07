@@ -19,3 +19,10 @@
         messages.innerHTML = messages.innerHTML + "<li class = \"message\">" + message + "</li>";
         messages.scrollTop = messages.scrollHeight;
     }
+
+    function sendMessage() {
+        var message = writer.value;
+        writer.value = "";
+
+        websocket.send(message);
+    }
